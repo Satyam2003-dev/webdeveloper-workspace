@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        background-color: #fafafa;
+      }
+
+      .container {
+        width: 800px;
+        height: 480px;
+        position: relative;
+        top: 15%;
+      }
+
+      .container .lamp-holder {
+        left: 35%;
+        top: -20%;
+        width: 30%;
+        height: 2px;
+        background: #2d2d2d;
+        position: absolute;
+      }
+
+      .container .lamp-holder::after {
+        left: calc(50% - 1px);
+        top: 0;
+        width: 2px;
+        height: 60px;
+        background: #2d2d2d;
+        position: absolute;
+        content: "";
+      }
+
+      .container .lamp {
+        left: calc(50% - 26px);
+        top: -10%;
+        width: 50px;
+        height: 25px;
+        background: #ebebeb;
+        position: absolute;
+        z-index: 3;
+        border: 1px solid #2d2d2d;
+        border-radius: 50px 50px 0 0;
+      }
+
+      .container .lamp::after {
+        left: calc(50% - 10px);
+        top: 26px;
+        width: 20px;
+        height: 10px;
+        background: #ffd53d;
+        position: absolute;
+        content: "";
+        border: 1px solid #2d2d2d;
+        border-radius: 0 0 20px 20px;
+        border-top: none;
+      }
+
+      .container .light {
+        left: 50%;
+        top: -10%;
+        width: 278px;
+        height: 229px;
+        background: linear-gradient(#fff1bd, transparent);
+        position: absolute;
+        z-index: 2;
+        transform: translateX(-50%);
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+      }
+
+      .container .wall {
+        left: 22%;
+        top: 5%;
+        width: 70px;
+        height: 25px;
+        background: #ebebeb;
+        position: absolute;
+        border-radius: 2px;
+        box-shadow: calc(75px * 1) 0 0 #d6d6d6, calc(75px * 2) 0 0 #ebebeb,
+          calc(75px * 3) 0 0 #ebebeb, calc(75px * 4) 0 0 #d6d6d6,
+          calc(75px * 5) 0 0 #ebebeb, calc(75px * 1 - 120px) 30px 0 #d6d6d6,
+          calc(75px * 2 - 120px) 30px 0 #ebebeb,
+          calc(75px * 3 - 120px) 30px 0 #ebebeb,
+          calc(75px * 4 - 120px) 30px 0 #ebebeb,
+          calc(75px * 5 - 120px) 30px 0 #d6d6d6,
+          calc(75px * 6 - 120px) 30px 0 #ebebeb,
+          calc(75px * 7 - 120px) 30px 0 #ebebeb,
+          calc(75px * 1 - 70px) 60px 0 #d6d6d6,
+          calc(75px * 2 - 70px) 60px 0 #ebebeb,
+          calc(75px * 3 - 70px) 60px 0 #d6d6d6,
+          calc(75px * 4 - 70px) 60px 0 #ebebeb,
+          calc(75px * 5 - 70px) 60px 0 #ebebeb,
+          calc(75px * 6 - 70px) 60px 0 #d6d6d6,
+          calc(75px * 1 + 0px) 90px 0 #ebebeb,
+          calc(75px * 2 + 0px) 90px 0 #ebebeb,
+          calc(75px * 3 + 0px) 90px 0 #d6d6d6,
+          calc(75px * 4 + 0px) 90px 0 #ebebeb;
+      }
+
+      .container .desk {
+        left: 5%;
+        top: initial;
+        width: 90%;
+        height: 5px;
+        background: #2d2d2d;
+        position: absolute;
+        bottom: 31.3%;
+        margin: auto;
+        border-radius: 32px;
+      }
+
+      .container .screen {
+        left: 50%;
+        top: initial;
+        width: 22%;
+        height: 21%;
+        background: #535353;
+        position: absolute;
+        transform: translateX(-50%);
+        bottom: 38%;
+        border: 4px solid #2d2d2d;
+        border-radius: 5px;
+        display: flex;
+      }
+
+      .container .screen::after {
+        left: 50%;
+        top: initial;
+        width: 10%;
+        height: 27%;
+        background: #ffffff;
+        position: absolute;
+        content: "";
+        bottom: -31%;
+        transform: translateX(-50%);
+        border-right: 2px solid #2d2d2d;
+        border-left: 2px solid #2d2d2d;
+      }
+
+      .container .screen .sidebar {
+        position: relative;
+        width: 15%;
+        height: 100%;
+        background: #51586a;
+      }
+
+      .container .screen .sidebar .h1 {
+        left: 10%;
+        top: 5%;
+        width: 75%;
+        height: 3%;
+        background: rgba(250, 250, 250, 0.7);
+        position: absolute;
+      }
+
+      .container .screen .sidebar .h2 {
+        left: 10%;
+        top: 15%;
+        width: 65%;
+        height: 1%;
+        background: #0ebeff;
+        position: absolute;
+        box-shadow: 0 5px 0 0 rgba(250, 250, 250, 0.7),
+          0 10px 0 0 rgba(250, 250, 250, 0.7),
+          0 15px 0 0 rgba(250, 250, 250, 0.7),
+          0 20px 0 0 rgba(250, 250, 250, 0.7), 0 30px 0 0 #ffdd40,
+          0 10px 0 0 rgba(250, 250, 250, 0.7),
+          0 35px 0 0 rgba(250, 250, 250, 0.7),
+          0 40px 0 0 rgba(250, 250, 250, 0.7),
+          0 45px 0 0 rgba(250, 250, 250, 0.7),
+          0 50px 0 0 rgba(250, 250, 250, 0.7), 0 60px 0 0 #47cf73,
+          0 65px 0 0 rgba(250, 250, 250, 0.7),
+          0 70px 0 0 rgba(250, 250, 250, 0.7),
+          0 75px 0 0 rgba(250, 250, 250, 0.7);
+      }
+
+      .container .screen .main {
+        width: 85%;
+        height: 100%;
+        position: relative;
+      }
+
+      .container .screen .main .search {
+        left: 5%;
+        top: 5%;
+        width: 85%;
+        height: 3%;
+        background: rgba(45, 45, 45, 0.4);
+        position: absolute;
+      }
+
+      .container .screen .main .pen {
+        border-radius: 2px;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
+      }
+
+      .container .screen .main .pen:hover {
+        transform: scaleY(1.3);
+      }
+
+      .container .screen .main .pen1 {
+        left: 15%;
+        top: 20%;
+        width: 15%;
+        height: 14%;
+        background: rgba(37, 40, 48, 0.6);
+        position: absolute;
+      }
+
+      .container .screen .main .pen2 {
+        left: 35%;
+        top: 20%;
+        width: 15%;
+        height: 14%;
+        background: rgba(37, 40, 48, 0.6);
+        position: absolute;
+      }
+
+      .container .screen .main .pen3 {
+        left: 55%;
+        top: 20%;
+        width: 15%;
+        height: 14%;
+        background: rgba(37, 40, 48, 0.6);
+        position: absolute;
+      }
+
+      .container .screen .main .pen4 {
+        left: 15%;
+        top: 40%;
+        width: 15%;
+        height: 14%;
+        background: rgba(37, 40, 48, 0.6);
+        position: absolute;
+      }
+
+      .container .screen .main .pen5 {
+        left: 35%;
+        top: 40%;
+        width: 15%;
+        height: 14%;
+        background: rgba(37, 40, 48, 0.6);
+        position: absolute;
+      }
+
+      .container .screen .main .pen6 {
+        left: 55%;
+        top: 40%;
+        width: 15%;
+        height: 14%;
+        background: rgba(37, 40, 48, 0.6);
+        position: absolute;
+      }
+
+      .container .screen .main .pen7 {
+        left: 15%;
+        top: 60%;
+        width: 15%;
+        height: 14%;
+        background: rgba(37, 40, 48, 0.6);
+        position: absolute;
+      }
+
+      .container .screen .main .pen8 {
+        left: 35%;
+        top: 60%;
+        width: 15%;
+        height: 14%;
+        background: rgba(37, 40, 48, 0.6);
+        position: absolute;
+      }
+
+      .container .screen .main .pen9 {
+        left: 55%;
+        top: 60%;
+        width: 15%;
+        height: 14%;
+        background: rgba(37, 40, 48, 0.6);
+        position: absolute;
+      }
+
+      .container .mouse {
+        left: 58%;
+        top: initial;
+        width: 15px;
+        height: 7.5px;
+        background: #ebebeb;
+        position: absolute;
+        bottom: 32.3%;
+        border: 1px solid #2d2d2d;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+      }
+
+      .container .mouse::after {
+        left: calc(50% - 0.5px);
+        top: 0;
+        width: 1px;
+        height: 2px;
+        background: #2d2d2d;
+        position: absolute;
+        content: "";
+      }
+
+      .container .keyboard {
+        left: 40%;
+        top: initial;
+        width: 40px;
+        height: 3px;
+        background: #ebebeb;
+        position: absolute;
+        bottom: 32.3%;
+        border: 1px solid #2d2d2d;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+
+      .container .keyboard::after {
+        left: 15%;
+        top: -2px;
+        width: 4px;
+        height: 2px;
+        background: #2d2d2d;
+        position: absolute;
+        content: "";
+        box-shadow: 6px 0 0 #2d2d2d, 12px 0 0 #2d2d2d, 18px 0 0 #2d2d2d,
+          24px 0 0 #2d2d2d;
+      }
+
+      .container .cup {
+        left: 72%;
+        top: initial;
+        width: 25px;
+        height: 30px;
+        background: #3d8ab6;
+        position: absolute;
+        bottom: 32.3%;
+        border-radius: 5px 5px 8px 8px;
+        border: 1px solid #2d2d2d;
+      }
+
+      .container .cup::after {
+        left: 80%;
+        top: calc(50% - 9px);
+        width: 15px;
+        height: 18px;
+        background: #3d8ab6;
+        position: absolute;
+        content: "";
+        box-sizing: border-box;
+        border: 1px solid #2d2d2d;
+        border-radius: 50%;
+        z-index: -2;
+      }
+
+      .container .cup::before {
+        left: 90%;
+        top: calc(50% - 6.5px);
+        width: 10px;
+        height: 13px;
+        background: #fafafa;
+        position: absolute;
+        content: "";
+        box-sizing: border-box;
+        border: 1px solid #2d2d2d;
+        border-radius: 50%;
+        z-index: -1;
+      }
+
+      .container .cup .tea {
+        left: 4px;
+        top: 7px;
+        width: 7px;
+        height: 7px;
+        background: #ebebeb;
+        position: absolute;
+        box-sizing: border-box;
+        border-radius: 1px;
+        border: 0.5px solid #2d2d2d;
+      }
+
+      .container .cup .tea::before {
+        left: 2.5px;
+        top: -8px;
+        width: 1px;
+        height: 8px;
+        background: #2d2d2d;
+        position: absolute;
+        content: "";
+        box-sizing: border-box;
+      }
+
+      .container .cup .steam {
+        left: 25%;
+        top: -2px;
+        width: 2px;
+        height: 10px;
+        background: #adadad;
+        position: absolute;
+        z-index: -1;
+        box-shadow: 5px -10px 0 #adadad, 10px -5px 0 #adadad;
+        animation: steam 3s infinite;
+      }
+
+      .container .plant {
+        left: 20%;
+        top: initial;
+        width: 35px;
+        height: 40px;
+        background: #f8f4ad;
+        position: absolute;
+        bottom: 32.3%;
+        border: 1px solid #2d2d2d;
+        border-radius: 0 0 12px 12px;
+      }
+
+      .container .plant .leaf1 {
+        left: 15%;
+        top: -55%;
+        width: 9px;
+        height: 45px;
+        background: #38b64c;
+        position: absolute;
+        border: 1px solid #2d2d2d;
+        border-radius: 90% 70% 70% 70%;
+        transform-origin: 0% 50%;
+        z-index: -2;
+        animation: wave-leaf1 1.5s infinite ease-in-out;
+      }
+
+      .container .plant .leaf2 {
+        left: 35%;
+        top: -85%;
+        width: 9px;
+        height: 55px;
+        background: #38b64c;
+        position: absolute;
+        border: 1px solid #2d2d2d;
+        border-radius: 80% 60% 70% 70%;
+        transform-origin: 0% 50%;
+        z-index: -3;
+        animation: wave-leaf2 1.7s infinite ease-in-out;
+      }
+
+      .container .plant .leaf3 {
+        left: 60%;
+        top: -45%;
+        width: 9px;
+        height: 25px;
+        background: #38b64c;
+        position: absolute;
+        border: 1px solid #2d2d2d;
+        border-radius: 80% 75% 70% 70%;
+        transform-origin: 0% 50%;
+        z-index: -2;
+        animation: wave-leaf3 2s infinite ease-in-out;
+      }
+
+      @keyframes steam {
+        0% {
+          top: -2px;
+          opacity: 1;
+        }
+
+        100% {
+          top: -25px;
+          opacity: 0;
+        }
+      }
+
+      @keyframes wave-leaf1 {
+        0%,
+        100% {
+          transform: rotateZ(-14deg);
+        }
+
+        50% {
+          transform: rotateZ(-16deg);
+        }
+      }
+
+      @keyframes wave-leaf2 {
+        0%,
+        100% {
+          transform: rotateZ(5deg);
+        }
+
+        50% {
+          transform: rotateZ(2deg);
+        }
+      }
+
+      @keyframes wave-leaf3 {
+        0%,
+        100% {
+          transform: rotateZ(8deg);
+        }
+
+        50% {
+          transform: rotateZ(13deg);
+        }
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="lamp-holder"></div>
+      <div class="lamp"></div>
+      <div class="light"></div>
+      <div class="wall"></div>
+      <div class="desk"></div>
+      <div class="screen">
+        <div class="sidebar">
+          <div class="h1"></div>
+          <div class="h2"></div>
+        </div>
+        <div class="main">
+          <div class="search"></div>
+          <div class="pen pen1"></div>
+          <div class="pen pen2"></div>
+          <div class="pen pen3"></div>
+          <div class="pen pen4"></div>
+          <div class="pen pen5"></div>
+          <div class="pen pen6"></div>
+          <div class="pen pen7"></div>
+          <div class="pen pen8"></div>
+          <div class="pen pen9"></div>
+        </div>
+      </div>
+      <div class="mouse"></div>
+      <div class="keyboard"></div>
+      <div class="cup">
+        <div class="tea"></div>
+        <div class="steam"></div>
+      </div>
+      <div class="plant">
+        <div class="leaf1"></div>
+        <div class="leaf2"></div>
+        <div class="leaf3"></div>
+      </div>
+    </div>
+  </body>
+</html>
